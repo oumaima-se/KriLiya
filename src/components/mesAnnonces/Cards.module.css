@@ -1,0 +1,117 @@
+
+h1{
+    margin-bottom: 60px;
+    padding: 15px;
+    background: #F9C22E;
+    text-align: center;
+    color: #1d314a;
+}
+.cardContainer{
+    margin: 0% 15% 0% 15%;
+    border-top: #1d314a 1px solid;
+
+}
+.card{
+    
+    padding: 10px 10px 20px 20px;
+    border-bottom:#1d314a 1px solid;
+    background: rgb(255, 255, 255);
+}
+
+.head{
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 10px;
+ 
+}
+
+.title{
+    font-size:x-large;
+    font-weight: bold;
+    color: #1d314a;
+
+}
+
+.image{
+    width: 100px;
+    height: 100px;
+}
+
+.btns{
+    display: flex;
+    width: 15%;
+    justify-content: space-between;
+    
+}
+
+.btnMore{
+    background-color: #1d314a;
+    border-color: #1d314a;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+.btnMore:hover{
+    filter: brightness(150%);
+}
+
+
+.btnUpdate{
+    background-color: #F9C22E;
+    border-color: #F9C22E;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+.btnUpdate:hover{
+    filter: brightness(110%);
+}
+
+.btnDelete{
+    background-color: #F15956;
+    border-color: #F15956;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+.btnDelete:hover{
+    filter: brightness(110%);
+}
+
+.body{
+    display: flex;
+    align-items: center;
+}
+
+.info{
+
+    margin-left: 5%;
+    font-size: large;
+    font-weight: bold;
+    color:#1d314a;
+}
+
+.light{
+    color:#53B3CB;
+    font-weight: bolder;
+   
+}
+
+.info div{
+    margin-bottom: 10px;
+}
+
