@@ -1,15 +1,21 @@
 import React from 'react';
 
 import '../../App.css';
-import Cards from '../Cards';
-//import Gallerie from '../Gallerie';
+import CarouselCover from '../pages/CarouselCover';
+import CardsLayout from './CardsLayout';
+import ListAnnonceComponent from './ListAnnonceComponent';
 
 function Home () {
     return (
-        <>
-        
-            <Cards/>
-        </>
+        <div>
+            <CarouselCover/>
+            <br/>
+            <br/>
+            <CardsLayout/>
+            <br/>
+            <br/>
+            <ListAnnonceComponent/>
+        </div>
     )
 }
 
