@@ -1,127 +1,45 @@
 import React, { Component } from 'react';
-import { CardGroup,Card } from 'react-bootstrap';
+import { CardGroup,Card,Col,Row } from 'react-bootstrap';
+import axios from 'axios';
 
 export class CardsLayout extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            annonces: []
+        }
+    }
+    
+    componentDidMount(){
+        axios.get("http://localhost:8080/krilya/annonce").then((res) => {
+            this.setState({ annonces: res.data });
+        });
+    }
     render() {
         return (
             <div>
-                <CardGroup>
+                <Row xs={1} md={3} className="g-4">
+                {this.state.annonces.map((annonce) => (
+                    <Col key = {annonce.id}>
                     <Card>
-                        <Card.Img 
-                        variant="top" 
+                        <Card.Img variant="top" 
                         src="/images/img-card1.jpg" 
                         width="160px"
-                        height="366px"
-                        />
+                        height="366px" />
                         <Card.Body>
-                        <Card.Title>Card title</Card.Title>
+                        <Card.Title>{annonce.titre}</Card.Title>
                         <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
+                            {annonce.description}
                         </Card.Text>
                         </Card.Body>
                         <Card.Footer>
                         <small className="text-muted">Last updated 3 mins ago</small>
                         </Card.Footer>
                     </Card>
-                    <Card>
-                        <Card.Img 
-                            variant="top" 
-                            src="/images/img-card2.jpg" 
-                            width="160px"
-                            height="366px"
-                        />
-                        <Card.Body>
-                        <Card.Title>Card title</Card.Title>
-                        <Card.Text>
-                            This card has supporting text below as a natural lead-in to additional
-                            content.{' '}
-                        </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                        <small className="text-muted">Last updated 3 mins ago</small>
-                        </Card.Footer>
-                    </Card>
-                    <Card>
-                        <Card.Img 
-                            variant="top" 
-                            src="/images/img-card3.jpg" 
-                            width="160px"
-                            height="366px"
-                        />
-                        <Card.Body>
-                        <Card.Title>Card title</Card.Title>
-                        <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This card has even longer content than the first to
-                            show that equal height action.
-                        </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                        <small className="text-muted">Last updated 3 mins ago</small>
-                        </Card.Footer>
-                    </Card>
-                    
-                </CardGroup>
-
-                <CardGroup>
-                    <Card>
-                        <Card.Img 
-                        variant="top" 
-                        src="/images/img-card1.jpg" 
-                        width="160px"
-                        height="366px"
-                        />
-                        <Card.Body>
-                        <Card.Title>Card title</Card.Title>
-                        <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
-                        </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                        <small className="text-muted">Last updated 3 mins ago</small>
-                        </Card.Footer>
-                    </Card>
-                    <Card>
-                        <Card.Img 
-                            variant="top" 
-                            src="/images/img-card2.jpg" 
-                            width="160px"
-                            height="366px"
-                        />
-                        <Card.Body>
-                        <Card.Title>Card title</Card.Title>
-                        <Card.Text>
-                            This card has supporting text below as a natural lead-in to additional
-                            content.{' '}
-                        </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                        <small className="text-muted">Last updated 3 mins ago</small>
-                        </Card.Footer>
-                    </Card>
-                    <Card>
-                        <Card.Img 
-                            variant="top" 
-                            src="/images/img-card3.jpg" 
-                            width="160px"
-                            height="366px"
-                        />
-                        <Card.Body>
-                        <Card.Title>Card title</Card.Title>
-                        <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This card has even longer content than the first to
-                            show that equal height action.
-                        </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                        <small className="text-muted">Last updated 3 mins ago</small>
-                        </Card.Footer>
-                    </Card>
-                    
-                </CardGroup>
+                    </Col>
+                ))}
+                </Row>
             </div>
         )
     }

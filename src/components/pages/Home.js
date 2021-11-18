@@ -14,7 +14,7 @@ function Home () {
             <CardsLayout/>
             <br/>
             <br/>
-            <ListAnnonceComponent/>
+            
         </div>
     )
 }
