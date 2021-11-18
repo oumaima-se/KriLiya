@@ -1,9 +1,14 @@
-import React, {Component} from 'react';
+import React, {} from 'react';
+import { useNavigate } from "react-router-dom";
 import style from './Cards.module.css';
 import Swal from 'sweetalert2';
-class Card extends Component {
-    
-    SupprimerAnnonce(){
+import image from '../../house.jpg';
+import {deleteAnnonce} from '../../functions/axios'
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+
+export default function Card({annonce}) {
+    let navigate = useNavigate();
+    const SupprimerAnnonce = (id) => {
         Swal.fire({
             title: 'Etes vous sûre?',
             text: "Vous ne pouvez pas restaurer les données! !",
@@ -15,6 +20,8 @@ class Card extends Component {
             cancelButtonText: 'NON'
           }).then((result) => {
             if (result.isConfirmed) {
+               deleteAnnonce(id)
+              .then((responce) => {
               Swal.fire(
                 {
                     title: 'Supprimée!',
@@ -22,32 +29,35 @@ class Card extends Component {
                     icon: 'success',
                     confirmButtonColor: '#1d314a',
                     confirmButtonText: 'OK',
-                }
-              )
+                })
+            })
             }
           })
     }
 
-    render(){
+ 
+    const ModifierAnnonce = (id) => {
+        navigate("/annonce/"+id);
+    }
+
+
         return(
             <div className={style.card}>
-                <div className={style.head}>
-                    <div className={style.title}><span className={style.yellow}>Titre d'annonce : </span>{this.props.annonce.title}</div>
-                    <div className={style.btns}>
-                        <button className={style.btnMore}><i class="fas fa-info-circle"></i></button>
-                        <button className={style.btnUpdate}><i class="fas fa-edit"></i></button>
-                        <button className={style.btnDelete} onClick={this.SupprimerAnnonce}><i class="fas fa-trash-alt"></i></button>
+                 <img className={style.image} src={image} alt="" />
+                 <div className={style.info}>
+                    <div className={style.head}>
+                        <div className={style.title}>{annonce.titre}</div>
+                        <div className={style.btns}>
+                            <button className={style.btnMore}><i className="fas fa-info-circle"></i></button>
+                            <button className={style.btnUpdate} onClick={ (e) => { ModifierAnnonce(annonce.id) }}><i className="fas fa-edit"></i></button>
+                            <button className={style.btnDelete} onClick={(e) => { SupprimerAnnonce(annonce.id) }}><i className="fas fa-trash-alt"></i></button>
+                        </div>
                     </div>
-                </div>
-                <div className={style.body}>
-                    <img className={style.image} src={this.props.annonce.image} alt="image" />
-                    <div className={style.info}>
-                        <div><span className={style.light}>Date de publication : </span>{this.props.annonce.Date}</div>
-                        <div><span className={style.light}>Prix : </span>{this.props.annonce.price} </div>
+                    <div>
+                        <div><span className={style.light}>Date de publication : </span>{ annonce.date }</div>
+                        <div><span className={style.light}>Prix : </span>{annonce.prix} MAD</div>
                     </div>
-                </div>
+                 </div>
             </div>
         )
     }
-}
-export default Card

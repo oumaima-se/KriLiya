@@ -1,48 +1,38 @@
-import React, {Component} from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from './Cards';
-import image from '../../house.jpg';
+import big from '../../log.jpg';
 import style from './Cards.module.css'
+import {getMesAnnonce} from '../../functions/axios'
 
-class Annonces extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            annonces:[
-                {
-                    title : 'Colocation',
-                    Date : '12/09/2021',
-                    price : '1000',
-                    image : image
-                },
-                {
-                    title : 'Colocation',
-                    Date : '01/09/2021',
-                    price : '2000',
-                    image : image
-                },
-                {
-                    title : 'Colocation',
-                    Date : '01/09/2021',
-                    price : '2000',
-                    image : image
-                }
-            ]
-        };
-      }
-  
-    render(){
-      const list =   this.state.annonces.map((annonce) => 
-        <Card annonce={annonce} />
-    );
-        return(
-            <div className={style.pattern}>
-                <h1>Mes Annonces</h1> 
-                <div className={style.cardContainer}>
-                   { list }  
-                </div> 
+
+
+export default function Annonce() {
+
+   const [annonces, setAnnonces] = useState([]);
+    useEffect(() => {
+         
+        getMesAnnonce().then((response) => {
+            setAnnonces(response.data)
+        })
+        .catch(error => {
+            console.log(error);
+        }) 
+    }, [])
+       
+    return(
+        <div className={style.pattern}>
+            <div className={style.filter}>
+                <img className={style.BigImage} src={big} alt=""  />
+                <div className={style.text}>
+                    <p>Gérer vous annonces...</p>
+                    <span>Lorem ipsum dolor sit amet. At voluptate debitis et possimus nihil in possimus tenetur ut enim omnis.</span>
+                </div>    
             </div>
-            
-        )
-    }
+            <div className={style.cardContainer}>
+                { annonces.map((annonce) => 
+                    <Card key={annonce.id} annonce={annonce} />)
+                }
+            </div> 
+        </div>   
+    )
 }
-export default Annonces;
