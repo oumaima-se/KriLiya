@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from './Cards';
-import big from '../../log.jpg';
+import big from '../../logement.jpg';
 import style from './Cards.module.css'
 import {getMesAnnonce} from '../../functions/axios'
 

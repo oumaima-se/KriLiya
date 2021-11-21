@@ -55,7 +55,6 @@ const [wifi, setWifi] = useState(false);
       }, []) 
 
     const update = (id) => {
-      
         let annonce = { chambres, chauffage, description, meuble, date, machineALaver, preference, prix, quartier, refrigerateur, surface, titre, type, ville, wifi};
         updateAnnonce(id, annonce).then(res =>{
               Swal.fire(
@@ -69,7 +68,6 @@ const [wifi, setWifi] = useState(false);
               ).then((result)=>{
                 navigate('/mes-annonces');
               })
-         
             });
       }
     return(
@@ -81,6 +79,7 @@ const [wifi, setWifi] = useState(false);
             <Form.Group>
               <Form.Label>Type d'annonce</Form.Label>
               <Form.Select value={type || ''} onChange={ (event) => { setType(event.target.value); }}>
+                  <option>Choisissez un type ...</option>
                   <option>Appartement</option>
                   <option>Studio</option>
                   <option>Garçonnière</option>
@@ -90,6 +89,7 @@ const [wifi, setWifi] = useState(false);
             <Form.Group>
               <Form.Label>Ville</Form.Label>
               <Form.Select value={ville || ''} onChange={(event) => { setVille(event.target.value); }}>
+                  <option>Choisissez une ville ...</option>
                   <option>Agadir</option>
                   <option>Tetouan</option>
                   <option>Casablance</option>

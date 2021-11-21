@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import image from '../../house.jpg';
 import {deleteAnnonce} from '../../functions/axios'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import Moment from 'react-moment';
 
 export default function Card({annonce}) {
     let navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function Card({annonce}) {
             if (result.isConfirmed) {
                deleteAnnonce(id)
               .then((responce) => {
+                navigate('/mes-annonces');
               Swal.fire(
                 {
                     title: 'Supprimée!',
@@ -30,6 +32,7 @@ export default function Card({annonce}) {
                     confirmButtonColor: '#1d314a',
                     confirmButtonText: 'OK',
                 })
+               
             })
             }
           })
@@ -40,10 +43,9 @@ export default function Card({annonce}) {
         navigate("/annonce/"+id);
     }
 
-
         return(
             <div className={style.card}>
-                 <img className={style.image} src={image} alt="" />
+                 <img className={style.image} src={"data:image/jpeg;base64,"+annonce.images[0].image+""} />
                  <div className={style.info}>
                     <div className={style.head}>
                         <div className={style.title}>{annonce.titre}</div>
@@ -54,7 +56,7 @@ export default function Card({annonce}) {
                         </div>
                     </div>
                     <div>
-                        <div><span className={style.light}>Date de publication : </span>{ annonce.date }</div>
+                        <div><span className={style.light}>Date de publication : </span><Moment format="YYYY/MM/DD" >{ annonce.date }</Moment></div>
                         <div><span className={style.light}>Prix : </span>{annonce.prix} MAD</div>
                     </div>
                  </div>

@@ -5,7 +5,7 @@ import { Grid, Row, Col, FloatingLabel } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import {addAnnonce, addImage} from '../../functions/axios'
 import '../../App.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
 
 export default function Ajoutannonce() {
 
@@ -24,42 +24,36 @@ export default function Ajoutannonce() {
   const [surface, setSurface] = useState('');
   const [titre, setTitre] = useState('');
   const [type, setType] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [ville, setVille] = useState('');
   const [wifi, setWifi] = useState(false);
   const [images, setImages] = useState([]);
 
    const selectFiles = (image) =>{
-            console.log(image)
              setImages(image)
-          }
+             console.log(image)
+    }
       
    const saveAnnonce = (a) => {
+        console.log(images);
         a.preventDefault();
         let annonce = {user_id: 1, chambres, chauffage, description, meuble, date, machineALaver, preference, prix, quartier, refrigerateur, surface, titre, type, ville, wifi};
-        addAnnonce(annonce).then(res =>{
-
-          if(res){
-
-            for (let i = 0; i < images.length; i++) {
-              let img = {image: images[i], annonce_id: res.data};
-              addImage(img).then(res =>{
-                console.log(res);
+        var data = new FormData();
+        data.append('annonce',  JSON.stringify(annonce));
+        data.append('files', images);
+        addAnnonce(data).then(res =>{
+                  console.log(res);
+                  Swal.fire(
+                    {
+                        title: 'Ajoutée!',
+                        text: 'Votre annonce a été ajouteée.',
+                        icon: 'success',
+                        confirmButtonColor: '#1d314a',
+                        confirmButtonText: 'OK',
+                    }
+                  );
                 });
-            }
-         }
-              Swal.fire(
-                {
-                    title: 'Ajoutée!',
-                    text: 'Votre annonce a été ajouteée.',
-                    icon: 'success',
-                    confirmButtonColor: '#1d314a',
-                    confirmButtonText: 'OK',
-                }
-              );
-          
-        });
-    }
+        }
  
     return(
       
@@ -70,7 +64,10 @@ export default function Ajoutannonce() {
 
   <Form.Group>
     <Form.Label>Type d'annonce</Form.Label>
-    <Form.Select defaultValue="Type d'annonce" onChange={(event) => { setType(event.target.value); }}>
+    <Form.Select defaultValue="Type" onChange={(event) => { 
+      console.log(event.target.value)
+      setType(event.target.value); }}>
+        <option>Choisissez un type ...</option>
         <option>Appartement</option>
         <option>Studio</option>
         <option>Garçonnière</option>
@@ -79,7 +76,10 @@ export default function Ajoutannonce() {
 
   <Form.Group>
     <Form.Label>Ville</Form.Label>
-    <Form.Select defaultValue="Ville" onChange={(event) => { setVille(event.target.value); }}>
+    <Form.Select defaultValue="ville" onChange={(event) => { 
+      console.log(event)
+      setVille(event.target.value); }}>
+        <option>Choisissez une ville ...</option>
         <option>Agadir</option>
         <option>Tetouan</option>
         <option>Casablance</option>
@@ -105,7 +105,9 @@ export default function Ajoutannonce() {
 
   <Form.Group className="mb-3">
     <Form.Label>Quartier</Form.Label>
-    <Form.Control type="text" placeholder="Quartier" onChange={(event) => { setQuartier(event.target.value); }} />
+    <Form.Control type="text" placeholder="Quartier" onChange={(event) => { 
+       console.log(event.target.value)
+       setQuartier(event.target.value); }} />
   </Form.Group>
 
   <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -115,19 +117,25 @@ export default function Ajoutannonce() {
   <Row className="mb-3">
     <Form.Group as={Col}>
     <Form.Label>Nombre de Chambres</Form.Label>
-    <Form.Control type="number" placeholder="Chambres" onChange={(event) => { setChambres(event.target.value); }}/>
+    <Form.Control type="number" placeholder="Chambres" onChange={(event) => { 
+       console.log(event.target.value)
+      setChambres(event.target.value); }}/>
     </Form.Group>
   </Row>
 
   <Row>  
     <Form.Group as={Col}>
     <Form.Label>Surface</Form.Label>
-    <Form.Control type="text" placeholder="Surface" onChange={(event) => { setSurface(event.target.value); }}/>
+    <Form.Control type="text" placeholder="Surface" onChange={(event) => { 
+       console.log(event.target.value)
+      setSurface(event.target.value); }}/>
     </Form.Group>
 
     <Form.Group as={Col}>
     <Form.Label>Prix</Form.Label>
-    <Form.Control type="text" placeholder="Prix" onChange={(event) => { setPrix(event.target.value); }}/>
+    <Form.Control type="text" placeholder="Prix" onChange={(event) => { 
+       console.log(event.target.value)
+      setPrix(event.target.value); }}/>
     </Form.Group>  
   </Row>
     <br></br>
@@ -140,14 +148,18 @@ export default function Ajoutannonce() {
         label="Chauffage"
         type={type}
         id={`inline-${type}-3`}
-       onChange={(event) => { setChauffage(event.target.value); }}
+       onChange={(event) => { 
+        console.log(event.target.checked)
+        setChauffage(event.target.checked); }}
       />
         <Form.Check
         inline
         label="Machine à laver"
         type={type}
         id={`inline-${type}-3`}
-        onChange={(event) => { setMachineALaver(event.target.value); }}
+        onChange={(event) => { 
+          console.log(event.target.checked);
+          setMachineALaver(event.target.checked); }}
         />
 
 
@@ -156,7 +168,9 @@ export default function Ajoutannonce() {
         label="Meublé"
         type={type}
         id={`inline-${type}-3`}
-        onChange={(event) => { setMeuble(event.target.value); }}
+        onChange={(event) => { 
+          console.log(event.target.checked);
+          setMeuble(event.target.checked); }}
         />
 
         <Form.Check
@@ -164,7 +178,9 @@ export default function Ajoutannonce() {
         label="Refrigirateur"
         type={type}
         id={`inline-${type}-3`}
-        onChange={(event) => { setRefrigerateur(event.target.value); }}
+        onChange={(event) => { 
+          console.log(event.target.checked);
+          setRefrigerateur(event.target.checked); }}
         />
 
         <Form.Check
@@ -172,26 +188,35 @@ export default function Ajoutannonce() {
         label="WIFI"
         type={type}
         id={`inline-${type}-3`}
-        onChange={(event) => { setWifi(event.target.value); }}
+        onChange={(event) => { 
+          
+          console.log(event.target.checked);
+          setWifi(event.target.checked); }}
         />
     </div>
   ))}
     </Row>
     <Form.Group as={Col}>
     <Form.Label>Preferences</Form.Label>
-    <Form.Control type="text" placeholder="Preferences"  onChange={(event) => { setPreference(event.target.value); }}/>
+    <Form.Control type="text" placeholder="Preferences"  onChange={(event) => {  
+      console.log(event.target.value);
+      setPreference(event.target.value); }}/>
     </Form.Group>
   
 
     <Form.Group className="mb-3">
     <Form.Label>Titre d'annonce</Form.Label>
-    <Form.Control type="text" placeholder="titre d'annonce"  onChange={(event) => { setTitre(event.target.value); }}/>
+    <Form.Control type="text" placeholder="titre d'annonce"  onChange={(event) => {  
+       console.log(event.target.value);
+       setTitre(event.target.value); }}/>
   </Form.Group>    
 
 
   <Form.Group className="mb-3">
     <Form.Label>Description d'annonce</Form.Label>
-  <FloatingLabel controlId="floatingTextarea2" label="Description"  onChange={(event) => { setDescription(event.target.value); }}>
+  <FloatingLabel controlId="floatingTextarea2" label="Description"  onChange={(event) => {  
+    console.log(event.target.value);
+     setDescription(event.target.value); }}>
     <Form.Control
       as="textarea"
       placeholder="Leave a comment here"
@@ -202,7 +227,9 @@ export default function Ajoutannonce() {
 
   <Form.Group controlId="formFile" className="mb-3">
     <Form.Label>Photos</Form.Label>
-    <Form.Control type="file" name ="images" multiple accept=".png, .jpg, .jpeg" onChange={(e) => {selectFiles(e.target.files)} }/>
+    <Form.Control type="file" name ="images" multiple accept=".png, .jpg, .jpeg" onChange={(event) => {
+      console.log(event.target.files[0]);
+      selectFiles(event.target.files[0])} }/>
   </Form.Group>
 <br></br>
   <Button variant="primary" type="submit" onClick={saveAnnonce}>
