@@ -1,14 +1,15 @@
-import React, {} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import style from './Cards.module.css';
 import Swal from 'sweetalert2';
-import image from '../../house.jpg';
 import {deleteAnnonce} from '../../functions/axios'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import Moment from 'react-moment';
+import { Image } from 'antd';
 
 export default function Card({annonce}) {
     let navigate = useNavigate();
+    const [visible, setVisible] = useState(false);
     const SupprimerAnnonce = (id) => {
         Swal.fire({
             title: 'Etes vous sûre?',
@@ -36,16 +37,24 @@ export default function Card({annonce}) {
             })
             }
           })
-    }
-
- 
+    } 
     const ModifierAnnonce = (id) => {
         navigate("/annonce/"+id);
-    }
+    } 
 
         return(
             <div className={style.card}>
-                 <img className={style.image} src={"data:image/jpeg;base64,"+annonce.images[0].image+""} />
+                 <Image className={style.image} preview={{ visible: false }}
+                        src={"data:image/jpeg;base64,"+annonce.images[0].image+""}
+                         onClick={() => setVisible(true)}
+                  />
+                 <div style={{ display: 'none' }}>
+                 <Image.PreviewGroup preview={{ visible, onVisibleChange: vis => setVisible(vis) }}>
+                        { annonce.images.map((image) => 
+                            <Image className={style.image} key={image.id} src={"data:image/jpeg;base64,"+image.image+""} />
+                        )}
+                 </Image.PreviewGroup>
+                 </div>
                  <div className={style.info}>
                     <div className={style.head}>
                         <div className={style.title}>{annonce.titre}</div>

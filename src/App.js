@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {useParams} from "react-router-dom";
 import Moment from 'react-moment';
 import 'moment-timezone';
+import ant from 'antd';
 
 
 function App() {

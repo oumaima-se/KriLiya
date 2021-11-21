@@ -31,7 +31,6 @@ export default function Ajoutannonce() {
 
    const selectFiles = (image) =>{
              setImages(image)
-             console.log(image)
     }
       
    const saveAnnonce = (a) => {
@@ -40,9 +39,10 @@ export default function Ajoutannonce() {
         let annonce = {user_id: 1, chambres, chauffage, description, meuble, date, machineALaver, preference, prix, quartier, refrigerateur, surface, titre, type, ville, wifi};
         var data = new FormData();
         data.append('annonce',  JSON.stringify(annonce));
-        data.append('files', images);
+        for (let i = 0; i < images.length; i++) {
+          data.append(`files`, images[i])
+        }
         addAnnonce(data).then(res =>{
-                  console.log(res);
                   Swal.fire(
                     {
                         title: 'Ajoutée!',
@@ -53,6 +53,7 @@ export default function Ajoutannonce() {
                     }
                   );
                 });
+                navigate("/mes-annonces")
         }
  
     return(
@@ -224,12 +225,10 @@ export default function Ajoutannonce() {
     />
   </FloatingLabel>
   </Form.Group>   
-
   <Form.Group controlId="formFile" className="mb-3">
     <Form.Label>Photos</Form.Label>
     <Form.Control type="file" name ="images" multiple accept=".png, .jpg, .jpeg" onChange={(event) => {
-      console.log(event.target.files[0]);
-      selectFiles(event.target.files[0])} }/>
+      selectFiles(event.target.files)} }/>
   </Form.Group>
 <br></br>
   <Button variant="primary" type="submit" onClick={saveAnnonce}>

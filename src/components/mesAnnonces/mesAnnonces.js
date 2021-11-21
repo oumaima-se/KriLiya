@@ -7,10 +7,8 @@ import {getMesAnnonce} from '../../functions/axios'
 
 
 export default function Annonce() {
-
    const [annonces, setAnnonces] = useState([]);
     useEffect(() => {
-         
         getMesAnnonce().then((response) => {
             setAnnonces(response.data)
         })
